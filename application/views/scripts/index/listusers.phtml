@@ -1,0 +1,64 @@
+<!-- fenetre qui affichera le formulaire de controle de l'utilisateur -->
+<div class="conteneur_controle left absolute" id="conteneur_controle" name="conteneur_controle">
+	<ul>
+		<li><?php echo $this->edit_profil; ?></li>
+		<li><?php echo $this->listeUsers; ?></li>
+	</ul>
+</div>
+
+<!-- on affiche le menu de navigation -->
+<div class="bandeau_header left">
+	<?php echo $this->connexion; ?>
+	<?php echo $this->deconnexion; ?>
+</div>
+
+<!-- on affiche la liste des utilisateurs -->
+<div class="contenu left">
+	<?php
+			// libelle du theme
+			echo '<div class="bandeau theme left">';
+			echo '<div class="texte titre_theme left">Liste des utilisateurs</div>';
+			echo '</div>';
+
+		foreach ($this->pagination as $cpt => $user) {
+
+			if ($this->users[$cpt]['moderateur'] == 1) {
+				$statut = "modérateur";
+			} else {
+				$statut = "utilisateur";
+			}
+			
+			echo '<div class="conteneur_info_users left">';
+
+				echo '<div class="contenu_message_visuel_users left"></div>';
+
+				echo '<div class="conteneur_perso_info_users left">';
+					echo '<div class="pseudo_info_users left">' . $this->users[$cpt]['pseudo'] . '</div>';
+					echo '<div class="contenu_nomprenom_info_user contenu_gauche_info_users left">';
+						echo '<div class="contenu_nom_info_users left">Nom : ' . $this->users[$cpt]['nom'] . '</div>';
+						echo '<div class="contenu_prenom_info_users left">' . $this->users[$cpt]['prenom'] . '</div>';
+					echo '</div>';
+					echo '<div class="contenu_age_info_users contenu_gauche_info_users left">Age : ' . $this->users[$cpt]['age'] . ' ans</div>';
+					echo '<div class="contenu_tel_info_users contenu_gauche_info_users left">T&eacute;l&eacute;phone : ' . $this->users[$cpt]['telephone'] . '</div>';
+					echo '<div class="contenu_ville_info_users contenu_gauche_info_users left">Ville : ' . $this->users[$cpt]['ville'] . '</div>';
+				echo '</div>';
+
+				echo '<div class="conteneur_privee_info_users left">';
+					echo '<div class="contenu_statut_privee_info_user left">' . $statut . '</div>';
+					echo '<div class="contenu_gauche_info_users left">- Adresse mail : <br />' . $this->users[$cpt]['mail'] . '</div>';
+					echo '<div class="contenu_gauche_info_users left">- Date d\'inscription : <br />' . $this->users[$cpt]['date_inscription'] . '</div>';
+				echo '</div>';
+
+			echo '</div>';
+
+		}
+
+		// on affiche la pagination
+		if ($this->nbUsers > 15) {
+			echo '<div class="conteneur_pagination left">';
+			echo '<div class="contenu_pagination">';
+			echo $this->paginationControl($this->pagination,'All','pagination.phtml');
+			echo '</div></div>';
+		}
+	?>
+</div>

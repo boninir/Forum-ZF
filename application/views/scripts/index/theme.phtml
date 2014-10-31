@@ -1,0 +1,77 @@
+<!-- fenetre "popup" qui affichera le formulaire de connexion -->
+<div class="conteneur_login_connexion left absolute" id="conteneur_login_connexion" name="conteneur_login_connexion">
+	<div class="login_conteneur" id="login_conteneur" name="login_conteneur">
+		<div class="header_login">
+			<div>Connexion</div>
+			<div class="close_login_connect" onclick="document.getElementById('conteneur_login_connexion').style.display='none';document.getElementById('overlayer').style.display='none';"></div>
+		</div>
+	<?php echo $this->loginForm; ?>
+	</div>
+</div>
+
+<!-- fenetre "popup" qui affichera le formulaire de creation d'une discution -->
+<div class="conteneur_disussion_connexion left absolute" id="conteneur_disussion_connexion" name="conteneur_disussion_connexion">
+	<div class="ajout_discussion_conteneur" id="ajout_discussion_conteneur" name="ajout_discussion_conteneur">
+		<div class="header_login">
+			<div>Ajout d'une discussion</div>
+			<div class="close_login" onclick="document.getElementById('conteneur_disussion_connexion').style.display='none';document.getElementById('overlayer').style.display='none';"></div>
+		</div>
+	<?php echo $this->discussionForm; ?>
+	</div>
+</div>
+
+<!-- fenetre "overlayer" qui s'affiche en meme temps que les fenetres "popup" afin de limiter les actions des utilisateurs aux action proposées par les "popups" -->
+<div class="overlayer" id="overlayer"></div>
+
+<div class="conteneur_discution left absolute" id="conteneur_discution" name="conteneur_discution"></div> <!-- fenetre de la popup d'ajout d'une discution  -->
+
+<!-- on affiche la barre de navigation -->
+<div class="bandeau_header left">
+	<?php echo $this->connexion; ?>
+	<?php echo $this->ajout_discussion; ?>
+	<?php echo $this->deconnexion; ?>
+</div>
+
+<!-- on affiche la liste des themes paginée -->
+<div class="contenu left">
+	<?php
+
+		// on affiche la pagination
+		if ($this->nbDiscussions > 10) {
+		echo '<div class="conteneur_pagination left">';
+		echo '<div class="contenu_pagination">';
+		echo $this->paginationControl($this->pagination,'All','pagination.phtml');
+		echo '</div></div>';
+		}
+
+		echo '<div class="bandeau theme left">';
+		echo '<div class="texte titre_theme left">'. $this->theme['nom'] .'</div>';
+		echo '</div>';
+
+		foreach ($this->pagination as $cpt => $discution) {
+
+			$userName = $this->TUsers->recupUser($this->discutions[$cpt]['user_id']);
+
+			echo '<div class="conteneur_info_theme left">';
+			echo '<div class=" contenu_info_theme left">';
+			echo '<div class="img_post left"></div><label class="texte_info_discu_libelle left">';
+			echo '<a href="' . $this->baseUrl('index/discution/id/' . $this->discutions[$cpt]['id_discution']) . '" class="texte_info_discu_libelle lien">' . $this->discutions[$cpt]['libelle'] . '</a></label>';
+			echo '<div class="left"></div><label class="texte_info_discu_user left"><li>D&eacute;but&eacute; par ' . $userName['pseudo'] . ' le ' . $this->discutions[$cpt]['date_creation'] . '</li></label>';
+			echo '</div>';
+			echo '</div>';			
+		}
+
+		// on affiche la pagination
+		if ($this->nbDiscussions > 10) {
+			echo '<div class="conteneur_pagination left">';
+			echo '<div class="contenu_pagination">';
+			echo $this->paginationControl($this->pagination,'All','pagination.phtml');
+			echo '</div></div>';
+		}
+	?>
+</div>
+
+<!-- on affiche la barre de navigation -->
+<div class="bandeau_footer left">
+	<?php echo $this->ajout_discussion; ?>
+</div>

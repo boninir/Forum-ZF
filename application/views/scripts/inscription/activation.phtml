@@ -1,0 +1,34 @@
+<!-- fenetre "popup" qui affichera le formulaire de connexion -->
+<div class="conteneur_login_connexion left absolute" id="conteneur_login_connexion" name="conteneur_login_connexion">
+	<div class="login_conteneur" id="login_conteneur" name="login_conteneur">
+		<div class="header_login">
+			<div class="">Connexion</div>
+			<div class="close_login_connect" onclick="document.getElementById('conteneur_login_connexion').style.display='none';document.getElementById('overlayer').style.display='none';"></div>
+		</div>
+	<?php echo $this->loginForm; ?>
+	</div>
+</div>
+
+<!-- fenetre "overlayer" qui s'affiche en meme temps que les fenetres "popup" afin de limiter les actions des utilisateurs aux action proposées par les "popups" -->
+<div class="overlayer" id="overlayer"></div>
+
+<!-- Fenetre qui permet a l'utilisateur d'afficher ses différentes options lorsqu'il est connecté -->
+<div class="option_user left" id="option_user"></div>
+
+<!-- on affiche le menu de navigation -->
+<div class="bandeau_header left">
+	<?php echo $this->connexion; ?>
+	<?php echo $this->deconnexion; ?>
+</div>
+
+<!-- on affiche la liste des themes paginée -->
+<div class="contenu left">
+	<div class="conteneur_validation left">
+		<div class="contenu_validation">
+			Merci d'avoir confirmé votre inscription, <br /><br /><br />
+			vous pouvez dès à présent vous connecter à votre compte via le bouton "connexion" . <br /><br />
+
+			L'équipe de Social'Insset vous souhaite une agréable expérience.<br /><br />
+		</div>
+	</div>
+</div>

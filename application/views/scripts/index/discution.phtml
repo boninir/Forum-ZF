@@ -1,0 +1,112 @@
+<!-- fenetre "popup" qui affichera le formulaire de connexion -->
+<div class="conteneur_login_connexion left absolute" id="conteneur_login_connexion" name="conteneur_login_connexion">
+	<div class="login_conteneur" id="login_conteneur" name="login_conteneur">
+		<div class="header_login">
+			<div class="">Connexion</div>
+			<div class="close_login_connect" onclick="document.getElementById('conteneur_login_connexion').style.display='none';document.getElementById('overlayer').style.display='none';"></div>
+		</div>
+	<?php echo $this->loginForm; ?>
+	</div>
+</div>
+
+<!-- fenetre "popup" qui de confirmation de suppression -->
+<div class="conteneur_del left absolute" id="conteneur_del" name="conteneur_del">
+	<div class="ajout_discussion_conteneur" id="ajout_discussion_conteneur" name="ajout_discussion_conteneur">
+		
+		<div class="header_login">
+			<div>Suppression du post</div>
+			<div class="close_login" onclick="document.getElementById('conteneur_del').style.display='none';document.getElementById('overlayer').style.display='none';"></div>
+		</div>
+
+		<div class="conteneur_popup_del" id="conteneur_popup_del">
+			<div class="contenu_popup_del" id="contenu_popup_del">
+				<div class="contenu_popup_del_texte" id="contenu_popup_del_texte">Voulez-vous vraiment supprimer ce post ?</div>
+			</div>
+		</div>
+
+		<div class="footer_login">
+			<div class="btn del_post_retour right" onclick="document.getElementById('conteneur_del').style.display='none';document.getElementById('overlayer').style.display='none';">Retour</div>
+			<div class="del_post_confirm right"><?php echo $this->delPostForm; ?></div>
+		</div>
+	</div>
+</div>
+
+<div class="overlayer" id="overlayer"></div>
+
+<!-- on affiche la barre de navigation -->
+<div class="bandeau_header left">
+	<?php echo $this->connexion; ?>
+	<?php echo $this->deconnexion; ?>
+</div>
+
+<!-- on affiche la liste des themes paginée -->
+<div class="contenu left">
+	<?php
+
+		$TDiscution = new TDiscution;
+		$TUsers = new TUsers;
+
+		if ($this->nbPosts >= 10) {
+			echo '<div class="conteneur_pagination left">';
+			echo '<div class="contenu_pagination">';
+			echo $this->paginationControl($this->pagination,'All','pagination.phtml');
+			echo '</div></div>';
+		}		
+
+		echo '<div class="conteneur_general_post left">';
+
+		echo '<div class="bandeau theme left">';
+		echo '<div class="texte titre_theme left">'. $this->discution['libelle'] .'</div>';
+		echo '</div>';
+
+		foreach ($this->pagination as $cpt => $post) {
+
+			$userName = $TUsers->recupUser($this->posts[$cpt]['user_id']);
+				
+			echo '<div class="conteneur_message left">';
+			echo '<div class="conteneur_message_header left">';
+			echo '<div class="contenu_message_pseudo left">' . $userName['pseudo'] . '</div>';
+			echo '<div class="contenu_message_date left">Post&eacute; le ' . $this->posts[$cpt]['date_creation'] . '</div>';
+			echo '</div>';
+			echo '<div class="contenu_message_auteur left">';
+			echo '<div class="contenu_message_visuel_auteur left"></div>';
+			echo '</div>';
+			echo '<div class="conteneur_message_texte left">';
+			echo '<div class="contenu_message_texte left" id="post'. $this->posts[$cpt]['id_post'] .'">' . $this->posts[$cpt]['message'] . '</div>';
+			echo '</div>';
+			echo '<div class=" contenu_message_footer left">';
+
+			// on affiche les options particulières si le connecté est un modérateur
+			if ($this->moderateur) {
+			echo '<div class="btn del_post right" onclick="document.getElementById(\'conteneur_del\').style.display=\'block\';document.getElementById(\'overlayer\').style.display=\'block\';document.getElementById(\'id_post_del\').value = '. $this->posts[$cpt]['id_post'] .';">Supprimer</div>';
+			echo '<div class="btn edit_post right" onclick="
+						document.getElementById(\'content_post\').innerHTML = document.getElementById(\'post'. $this->posts[$cpt]['id_post'] .'\').innerHTML;
+						document.getElementById(\'id_post\').value = '. $this->posts[$cpt]['id_post'] .';" >&Eacute;diter</div>';
+			}
+			echo '</div>' ;
+			echo '</div>';
+		}
+	?>
+
+	<div class="bandeau theme left">
+		<div class="texte titre_theme left">R&eacute;pondre &agrave; ce sujet</div>
+		<div class="texte ouvrir_contenteditable right" id="ouvrir_contenteditable" onclick="document.getElementById('conteneur_contenteditable').style.display='block';document.getElementById('ouvrir_contenteditable').style.display='none';" maxlength="10" ></div>
+	</div>
+
+	<div class="conteneur_contenteditable left" id="conteneur_contenteditable">
+		<div class="content_post left" id="content_post" contentEditable="true" ></div>
+		<div class="btn btn_fermer right" id="btn_fermer" onclick="document.getElementById('conteneur_contenteditable').style.display='none';document.getElementById('ouvrir_contenteditable').style.display='block';">Fermer</div>
+		<div class="btn_ajouter_post right"><?php echo $this->postForm; ?></div>
+	</div>
+
+	</div>
+
+	<?php 
+		if ($this->nbPosts >= 10) {
+			echo '<div class="conteneur_pagination left">';
+			echo '<div class="contenu_pagination">';
+			echo $this->paginationControl($this->pagination,'All','pagination.phtml');
+			echo '</div></div>';
+		}
+	?>
+</div>

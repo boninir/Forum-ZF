@@ -1,0 +1,79 @@
+<!-- fenetre "popup" qui affichera le formulaire de connexion -->
+<div class="conteneur_login_connexion left absolute" id="conteneur_login_connexion" name="conteneur_login_connexion">
+	<div class="login_conteneur" id="login_conteneur" name="login_conteneur">
+		<div class="header_login">
+			<div class="">Connexion</div>
+			<div class="close_login_connect" onclick="document.getElementById('conteneur_login_connexion').style.display='none';document.getElementById('overlayer').style.display='none';"></div>
+		</div>
+	<?php echo $this->loginForm;?>
+	</div>
+</div>
+
+
+<!-- fenetre "popup" qui affichera le formulaire de creation d'un theme -->
+<div class="conteneur_disussion_connexion left absolute" id="conteneur_disussion_connexion" name="conteneur_disussion_connexion">
+	<div class="ajout_discussion_conteneur" id="ajout_discussion_conteneur" name="ajout_discussion_conteneur">
+		<div class="header_login">
+			<div>Ajout d'un thème</div>
+			<div class="close_login" onclick="document.getElementById('conteneur_disussion_connexion').style.display='none';document.getElementById('overlayer').style.display='none';"></div>
+		</div>
+	<?php echo $this->themeForm; ?>
+	</div>
+</div>
+
+<!-- fenetre qui affichera le formulaire de controle de l'utilisateur -->
+<div class="conteneur_controle left absolute" id="conteneur_controle" name="conteneur_controle">
+	<ul>
+		<li><?php echo $this->edit_profil; ?></li>
+		<li><?php echo $this->listeUsers; ?></li>
+	</ul>
+</div>
+
+<!-- fenetre "overlayer" qui s'affiche en meme temps que les fenetres "popup" afin de limiter les actions des utilisateurs aux action proposées par les "popups" -->
+<div class="overlayer" id="overlayer"></div>
+
+<!-- Fenetre qui permet a l'utilisateur d'afficher ses différentes options lorsqu'il est connecté -->
+<div class="option_user left" id="option_user"></div>
+
+<!-- on affiche le menu de navigation -->
+<div class="bandeau_header left">
+	<?php echo $this->connexion; ?>
+	<?php echo $this->ajout_theme; ?>
+	<?php echo $this->deconnexion; ?>
+</div>
+
+<!-- on affiche la liste des themes paginée -->
+<div class="contenu left">
+	<?php
+
+		foreach ($this->pagination as $cpt => $theme) {
+
+			// libelle du theme
+			echo '<div class="bandeau theme left">';
+			echo '<div class="texte titre_theme left"><a href="' . $this->baseUrl('index/theme/id/' . $theme['id_theme']) . '" class="texte">' . $theme['nom'] . '</a></div>';
+			echo '</div>';
+
+			// informations du theme
+			echo '<div class="conteneur_info_theme left">';
+			echo '<div class=" contenu_info_theme left">';
+			echo '<div class="contenu_nb_dicution left">';
+			echo '<div class="img_post left"></div>';
+			echo '<label class="texte_info_theme_discu left">Nombre de discutions : ' . $this->TDiscution->nbDiscutionsParTheme($cpt + 1) . '</label>';
+			echo '</div>';
+			echo '<div class="contenu_date_derniere_discution left">';
+			echo '<div class="img_discution left"></div>';
+			echo '<label class="texte_info_theme_date left">Date de la dernière discution : ' . $this->TDiscution->dateDerniereDiscusionParTheme($cpt + 1) . '</label>';
+			echo '</div>';
+			echo '</div>';
+			echo '</div>';
+		}
+
+		// on affiche la pagination
+		if ($this->nbthemes->count() > 5) {
+			echo '<div class="conteneur_pagination left">';
+			echo '<div class="contenu_pagination">';
+			echo $this->paginationControl($this->pagination,'All','pagination.phtml');
+			echo '</div></div>';
+		}
+	?>
+</div>

@@ -1,0 +1,41 @@
+<div class="pagination" style="width:100%">
+    <div style="float:left;width:28%">
+    </div>
+    <div style="float:right;width:70%;">
+        <!-- First page link -->
+        <?php if (isset($this->previous)): ?>
+              <a href="<?= $this->url(array('page' => $this->first)); ?>" class="btn_pagination left"> << </a>
+        <?php else: ?>
+                <span class="disabled btn_pagination left"> << </span>
+        <?php endif; ?>
+    
+        <!-- Previous page link -->
+    
+        <?php if (isset($this->previous)): ?>
+              <a href="<?= $this->url(array('page' => $this->previous)); ?>" class="btn_pagination left"> Pr&eacute;c&eacute;dent</a>
+        <?php else: ?>
+            <span class="disabled btn_pagination left">Pr&eacute;c&eacute;dent</span>
+        <?php endif; ?>
+        <!-- Numbered page links -->
+        <?php foreach ($this->pagesInRange as $page): ?>
+            <?php if ($page != $this->current): ?>
+                <a href="<?= $this->url(array('page' => $page)); ?>" class="btn_pagination left"><?= $page; ?></a>
+            <?php else: ?>
+                <div class="actif left"><?= $page; ?></div>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        <!-- Next page link -->
+        <?php if (isset($this->next)): ?>
+              <a href="<?= $this->url(array('page' => $this->next)); ?>" class="btn_pagination left">Suivant</a>
+        <?php else: ?>
+              <span class="disabled btn_pagination left">Suivant</span>
+        <?php endif; ?>
+        <!-- Last page link -->
+        <?php if (isset($this->next)): ?>
+              <a href="<?= $this->url(array('page' => $this->last)); ?>" class="btn_pagination left"> >> </a>
+        <?php else: ?>
+            <span class="disabled btn_pagination left"> >> </span>
+        <?php endif; ?>
+        &nbsp; Page <?= $this->current; ?> sur <?= $this->last; ?>
+    </div>
+</div>

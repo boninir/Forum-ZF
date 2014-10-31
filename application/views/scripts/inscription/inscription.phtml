@@ -1,0 +1,26 @@
+<div class="conteneur_login_connexion left absolute" id="conteneur_login_connexion" name="conteneur_login_connexion">
+	<div class="login_conteneur" id="login_conteneur" name="login_conteneur">
+		<div class="header_login">
+			Connexion
+			<div class="close_login_inscription" onclick="document.getElementById('conteneur_login_connexion').style.display='none';document.getElementById('overlayer').style.display='none';"></div>
+		</div>
+	<?php echo $this->loginForm; ?>
+	</div>
+</div>
+
+<!-- fenetre "overlayer" qui s'affiche en meme temps que les fenetres "popup" afin de limiter les actions des utilisateurs aux action proposées par les "popups" -->
+<div class="overlayer" id="overlayer"></div>
+
+<div class="bandeau_header left">
+	<?php echo $this->connexion; ?>
+	<?php echo $this->deconnexion; ?>
+</div>
+
+<div class="contenu left">
+	<div class="bandeau left">
+		<div class="bandeau_texte texte">Rejoindre notre communauté</div>
+	</div>
+	<div class="contenu_form left">
+		<?php echo $this->form; ?>
+	</div>
+</div>
